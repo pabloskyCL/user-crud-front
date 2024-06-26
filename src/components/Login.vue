@@ -12,11 +12,17 @@ import LoginForm from './forms/LoginForm.vue';
           Iniciar Sesión
         </CardTitle>
         <CardDescription>
-          Ingresa tu email para iniciar sesión, si aun no tienes cuenta registrate aquí
+          Ingresa tu email y contraseña para iniciar sesión.
         </CardDescription>
       </CardHeader>
       <CardContent class="">
         <LoginForm></LoginForm>
+        <div class="mt-4 text-center text-sm">
+          aun no tienes cuenta?.
+          <RouterLink to="register" class="underline">
+            Registrate
+          </RouterLink>
+        </div>
       </CardContent>
       <CardFooter>
         <Button type="submit" form="login-form" class="w-full">
