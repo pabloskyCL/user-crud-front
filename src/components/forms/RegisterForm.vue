@@ -5,6 +5,12 @@ import { Button } from '@/components/ui/button';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod'
 import { useForm } from 'vee-validate';
+import { useAuthStore } from '@/Store/Auth';
+import { Toaster } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/toast/use-toast'
+
+const authStore = useAuthStore();
+const { toast } = useToast();
 
 const formSchema = toTypedSchema(z.object({
     firstName: z.string({
@@ -18,15 +24,25 @@ const formSchema = toTypedSchema(z.object({
     }).email(),
     password: z.string({
         required_error: "Contraseña es obligatorio"
-    }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_\-\/])([A-Za-z\d@$!%*?&.#_\-\/]|[^ ]){8,15}$/,{message: 'Contraseña con formato invalido'})
+    }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_\-\/])([A-Za-z\d@$!%*?&.#_\-\/]|[^ ]){8,15}$/, { message: 'Contraseña con formato invalido' })
 }))
 
 const form = useForm({
     validationSchema: formSchema
 })
 
-const onSubmit = form.handleSubmit((values) => {
-    console.log(values)
+const onSubmit = form.handleSubmit(async (values) => {
+    await authStore.register({
+        name: values.firstName + ' ' + values.lastName,
+        email: values.email,
+        password: values.password
+    }).catch((error) => {
+        toast({
+            title: error.response.data.message,
+            variant: 'destructive'
+        })
+
+    });
 })
 
 </script>
@@ -83,4 +99,5 @@ const onSubmit = form.handleSubmit((values) => {
             Crear cuenta.
         </Button>
     </form>
+    <Toaster />
 </template>

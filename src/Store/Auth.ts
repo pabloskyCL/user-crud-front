@@ -1,6 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { Router } from "vue-router";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 export type authState = {
   authUser: {}| null,
@@ -9,21 +10,19 @@ export type authState = {
 }
 
 export type RegisterUserType = {
-  firstName: string,
-  lastName: string,
-  birthday: string,
+  name: string
   email: string,
-  password: string,
-  address: string,
-  postalCode?: string
+  password: string
 }
 
 export type LoginUserType = {
-  username: string,
+  email: string,
   password: string
 }
 
 declare module 'pinia' { export interface PiniaCustomProperties {$router: Router} }
+
+const {toast} = useToast()
 
 export const useAuthStore = defineStore({
     id: "auth",
@@ -38,39 +37,25 @@ export const useAuthStore = defineStore({
             await axios.get('/sanctum/csrf-cookie');
         },
         async login(form: LoginUserType) {
-            // await this.getToken();
+            await this.getToken();
             await axios.post('http://localhost/api/login', form).then(
                 (res) => {
-                    console.log(res)
                     this.authToken = res.data.accessToken;
-                    // this.authUser = res.data.user;
+                    this.authUser = res.data.user;
                     this.$router.push('/');
                 }
-            ).catch((errors) => {
-                let desc = '';
-                errors.response.data.errors.map(
-                    (e) => {
-                        desc = desc + ' ' + e
-                    }
-                )
-                this.authError = desc;
-
-            })
+            )
         },
         async register(form: RegisterUserType) {
-            // await this.getToken();
+            await this.getToken();
             await axios.post('http://localhost/api/register', form).then(
                 (res) => {
+                  toast({
+                    title: 'Usuario creado con exito'
+                  })
                     this.$router.push('/login');
                 }
-            ).catch((errors) => {
-                let desc = '';
-                console.log(errors);
-                errors.response.data.errors.map((e) => {
-                    desc = desc + ' ' + e;
-                })
-                this.authError = desc;
-            })
+            )
         },
         async logout() {
             await axios.get('localhost/api/logout', {

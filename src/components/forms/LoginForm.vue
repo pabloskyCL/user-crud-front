@@ -5,9 +5,15 @@ import FormItem from '@/components/ui/form/FormItem.vue';
 import FormLabel from '@/components/ui/form/FormLabel.vue';
 import FormMessage from '@/components/ui/form/FormMessage.vue';
 import { Input } from '@/components/ui/input';
+import { useAuthStore } from '@/Store/Auth';
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate';
+import { Toaster } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/toast/use-toast';
 import * as z from 'zod'
+
+const authStore = useAuthStore()
+const { toast } = useToast();
 
 const formSchema = toTypedSchema(z.object({
     email: z.string().email(),
@@ -19,7 +25,16 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit((values) => {
-    console.log(values)
+    authStore.login({
+        email: values.email,
+        password: values.password
+    }).catch((error) => {
+        toast({
+            title: error.response.data.message,
+            variant: 'destructive'
+        })
+    });
+
 })
 </script>
 
@@ -48,4 +63,5 @@ const onSubmit = form.handleSubmit((values) => {
             </FormField>
         </div>
     </form>
+    <Toaster />
 </template>
