@@ -1,10 +1,11 @@
 import { Router, createRouter, createWebHistory } from 'vue-router'
-
+import AdminLayout from '@/components/layouts/AdminLayout.vue';
 
 const routes = [
   {
     path: '/',
-    component: () => import('../components/Index.vue')
+    meta: { layout: AdminLayout },
+    component: () => import('@/components/Index.vue')
   },
   {
     path: '/login',

@@ -4,7 +4,10 @@ import { Router } from "vue-router";
 import { useToast } from "@/components/ui/toast/use-toast";
 
 export type authState = {
-  authUser: {}| null,
+  authUser: {
+    name: string,
+    email: string
+  }| null,
   authToken: string | undefined,
   authError: {} | null
 }
