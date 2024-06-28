@@ -4,7 +4,35 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { MoreHorizontal } from 'lucide-vue-next'
+import { MoreHorizontal, LoaderCircle } from 'lucide-vue-next'
+import { onMounted, ref } from 'vue'
+import { useUser } from '@/utils/useUser'
+import Toaster from '../ui/toast/Toaster.vue'
+
+const { usersList, deleteUser } = useUser();
+
+const users = ref();
+const loading = ref(true);
+
+onMounted(async () => {
+    const res = await usersList().finally(() => {
+        loading.value = false;
+    });
+
+    users.value = res?.data.data
+
+})
+
+const handleDelete = async (id: number) => {
+    loading.value = true;
+    await deleteUser(id).then(async () => {
+        const res = await usersList()
+        users.value = res?.data.data
+    }).finally(() => {
+        loading.value = false;
+    })
+}
+
 </script>
 
 <template>
@@ -17,7 +45,7 @@ import { MoreHorizontal } from 'lucide-vue-next'
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Table>
+                <Table v-if="!loading">
                     <TableHeader>
                         <TableRow>
                             <TableHead>Nombre</TableHead>
@@ -33,17 +61,17 @@ import { MoreHorizontal } from 'lucide-vue-next'
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
+                        <TableRow v-for="user in users">
                             <TableCell class="font-medium">
-                                Laser Lemonade Machine
+                                {{ user.name }}
                             </TableCell>
                             <TableCell>
-                                <Badge variant="outline">
-                                    Draft
+                                <Badge v-for="role in user.role" variant="outline">
+                                    {{ role }}
                                 </Badge>
                             </TableCell>
                             <TableCell class="hidden md:table-cell">
-                                pabloskiquiorz@gmail.com
+                                {{ user.email }}
                             </TableCell>
                             <TableCell class="hidden md:table-cell">
                                 2023-07-12 10:42 AM
@@ -60,13 +88,14 @@ import { MoreHorizontal } from 'lucide-vue-next'
                                         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                                         <DropdownMenuItem>Ver</DropdownMenuItem>
                                         <DropdownMenuItem>Editar</DropdownMenuItem>
-                                        <DropdownMenuItem>Eliminar</DropdownMenuItem>
+                                        <DropdownMenuItem @click="handleDelete(user.id)">Eliminar</DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
+                <LoaderCircle class="animate-spin items-center justify-center h-20 w-20" v-else />
             </CardContent>
             <CardFooter>
                 <div class="text-xs text-muted-foreground">
@@ -75,5 +104,6 @@ import { MoreHorizontal } from 'lucide-vue-next'
                 </div>
             </CardFooter>
         </Card>
+        <Toaster />
     </main>
 </template>
