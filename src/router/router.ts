@@ -33,7 +33,7 @@ router.beforeEach(async (to, from) => {
     return {  path: '/login'}
   }
 
-  if(authStore.user && to.meta.layout && !authStore.user.role.find((role) => role.name == 'Admin')){
+  if(authStore.user && to.meta.layout && !authStore.user.roles.find((role) => role == 'Admin')){
      to.meta.layout = UserLayout
   }
 

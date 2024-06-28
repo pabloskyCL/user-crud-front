@@ -6,7 +6,8 @@ import { useToast } from "@/components/ui/toast/use-toast";
 export type authState = {
   authUser: {
     name: string,
-    email: string
+    email: string,
+    roles: string[]
   }| null,
   authToken: string | undefined,
   authError: {} | null
