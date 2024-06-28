@@ -17,6 +17,11 @@ const routes = [
   {
     path: '/register',
     component: () => import('@/components/Register.vue')
+  },
+  {
+    path: '/create',
+    meta: { layout: AdminLayout },
+    component: () => import('@/components/Admin/Create.vue')
   }
 ]
 

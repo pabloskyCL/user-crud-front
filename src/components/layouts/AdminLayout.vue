@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useAuthStore } from '@/Store/Auth'
 import { useRouter } from 'vue-router'
+import { Toaster } from '../ui/toast'
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -48,8 +49,9 @@ const handleLogout = async () => {
                 </div>
             </div>
         </div>
-        <div class="flex flex-col">
-            <header class="flex h-14 items-center justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <div class="flex flex-col space-x-12">
+            <header
+                class="flex h-14 items-center justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
                 <Sheet>
                     <SheetTrigger as-child>
                         <Button variant="outline" size="icon" class="shrink-0 md:hidden">
@@ -100,6 +102,7 @@ const handleLogout = async () => {
             </header>
             <slot />
         </div>
+        <Toaster />
     </div>
 
 
