@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useAuthStore } from "@/Store/Auth"
 import { useToast } from "@/components/ui/toast";
-import { useRouter } from "vue-router";
 
 export type UserCreateForm = {
   name: string,
@@ -23,7 +22,7 @@ export function useUser(){
     const { toast } = useToast();
 
     const usersList = async () => {
-      await axios.get('http://localhost/api/user', {
+     return await axios.get('http://localhost/api/user', {
         headers: {
           Authorization: 'Bearer ' + authStore.token,
           Accept: 'application/json'
@@ -55,7 +54,7 @@ export function useUser(){
         toast({
           title: data.message,
           variant: 'default',
-          class: 'bg-green-700'
+          class: 'bg-teal-600 text-white'
         })
       }).catch(({response}) => {
         toast({
@@ -66,7 +65,7 @@ export function useUser(){
     }
 
     const deleteUser = async (id: number) => {
-      return await axios.delete('http://localhost/api/user',{data: id,
+      return await axios.delete('http://localhost/api/user',{data: {"id": id},
         headers: {
           Authorization: 'Bearer '+ authStore.token,
           Accept: 'application/json'
@@ -75,7 +74,7 @@ export function useUser(){
         toast({
           title: data.message,
           variant: 'default',
-          class: 'bg-green-700'
+          class: 'bg-teal-600 text-white'
         })
       }).catch(({response}) => {
         toast({
