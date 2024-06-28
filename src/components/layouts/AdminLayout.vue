@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CircleUser, Home, Menu, Package2, Search } from 'lucide-vue-next'
+import { CircleUser, Home, Menu, Package2, Search, UserPlus } from 'lucide-vue-next'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
@@ -30,8 +30,18 @@ const handleLogout = async () => {
                     <nav class="grid items-start px-2 text-sm font-medium lg:px-4">
                         <RouterLink to="/"
                             class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary">
-                            <Home class="h-4 w-4" />
-                            Inicio
+                            <Home class="h-6 w-6" />
+                            Listado de usuarios
+                        </RouterLink>
+                        <RouterLink to="/create"
+                            class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary">
+                            <UserPlus class="h-6 w-6" />
+                            Crear Usuario
+                        </RouterLink>
+                        <RouterLink to="/"
+                            class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary">
+                            <CircleUser class="h-6 w-6" />
+                            Editar mi usuario
                         </RouterLink>
 
                     </nav>
