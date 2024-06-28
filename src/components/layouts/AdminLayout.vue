@@ -73,7 +73,7 @@ const handleLogout = async () => {
                 <DropdownMenu v-if="authStore.user">
                     <DropdownMenuTrigger as-child>
                         <Button variant="secondary" size="icon" class="rounded-full">
-                            <CircleUser class="h-5 w-5" />
+                            <CircleUser class="h-8 w-8" />
                             <span class="sr-only">Toggle user menu</span>
                         </Button>
                     </DropdownMenuTrigger>
