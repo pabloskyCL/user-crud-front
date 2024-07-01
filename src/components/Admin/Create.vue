@@ -10,8 +10,9 @@ import { useUser } from '@/composables/useUser';
 import { useToast } from '../ui/toast';
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import type { role } from '@/Store/Auth';
 
-const roles = ref([]);
+const roles = ref<role[]>();
 
 const { toast } = useToast();
 const { saveUser } = useUser();
@@ -135,7 +136,7 @@ const onSubmit = handleSubmit((values) => {
                                 </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                                <SelectItem v-for="role in roles" :key="role" :value="role.name">
+                                <SelectItem v-for="role in roles" :key="role.name" :value="role.name">
                                     {{ role.name }}
                                 </SelectItem>
                             </SelectContent>
