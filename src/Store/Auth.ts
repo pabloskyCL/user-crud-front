@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/toast/use-toast";
 
 export type authState = {
   authUser: {
+    id: number,
     name: string,
     email: string,
     roles: string[]
@@ -22,6 +23,11 @@ export type RegisterUserType = {
 export type LoginUserType = {
   email: string,
   password: string
+}
+
+
+export type role = {
+  name: string
 }
 
 declare module 'pinia' { export interface PiniaCustomProperties {$router: Router} }

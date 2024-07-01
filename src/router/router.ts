@@ -22,6 +22,13 @@ const routes = [
     path: '/create',
     meta: { layout: AdminLayout },
     component: () => import('@/components/Admin/Create.vue')
+  },
+  {
+    path: '/edit/:id',
+    name: 'edit',
+    params: true,
+    meta: { layout: AdminLayout },
+    component: () => import('@/components/Admin/Edit.vue')
   }
 ]
 

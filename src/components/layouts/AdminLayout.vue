@@ -8,6 +8,7 @@ import { useAuthStore } from '@/Store/Auth'
 import { useRouter } from 'vue-router'
 import { Toaster } from '../ui/toast'
 
+
 const authStore = useAuthStore();
 const router = useRouter();
 
@@ -39,7 +40,7 @@ const handleLogout = async () => {
                             <UserPlus class="h-6 w-6" />
                             Crear Usuario
                         </RouterLink>
-                        <RouterLink to="/"
+                        <RouterLink :to="`edit/${authStore.user?.id}`"
                             class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary">
                             <CircleUser class="h-6 w-6" />
                             Editar mi usuario
@@ -50,8 +51,7 @@ const handleLogout = async () => {
             </div>
         </div>
         <div class="flex flex-col space-x-12">
-            <header
-                class="flex h-14 items-center justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+            <header class="flex h-14 items-center justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
                 <Sheet>
                     <SheetTrigger as-child>
                         <Button variant="outline" size="icon" class="shrink-0 md:hidden">

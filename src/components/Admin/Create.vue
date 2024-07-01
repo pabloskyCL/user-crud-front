@@ -6,7 +6,7 @@ import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import * as z from 'zod';
 import { useForm } from 'vee-validate';
-import { useUser } from '@/utils/useUser';
+import { useUser } from '@/composables/useUser';
 import { useToast } from '../ui/toast';
 import { onMounted, ref } from 'vue';
 import axios from 'axios';

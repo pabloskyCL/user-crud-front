@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge'
 import { MoreHorizontal, LoaderCircle } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
-import { useUser } from '@/utils/useUser'
+import { useUser } from '@/composables/useUser'
 import Toaster from '../ui/toast/Toaster.vue'
 
 const { usersList, deleteUser } = useUser();

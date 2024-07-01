@@ -15,7 +15,6 @@ export type UserUpdateForm = {
   role: string
 }
 
-
 export function useUser(){
 
     const authStore = useAuthStore();
