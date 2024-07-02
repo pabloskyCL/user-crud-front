@@ -169,6 +169,6 @@ const handleEditUser = async (values: any) => {
                 <Button type="submit" form="edit-user-form">Guardar</Button>
             </CardFooter>
         </Card>
-        <ChangePasswordForm />
+        <ChangePasswordForm :userId="user.id" />
     </div>
 </template>

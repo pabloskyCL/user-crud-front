@@ -5,7 +5,9 @@ import { Input } from '../ui/input';
 import * as z from 'zod';
 import { Form, Field } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
+import { useUser } from '@/composables/useUser';
 
+const { changePassword } = useUser();
 
 const editPasswordSchema = toTypedSchema(z.object({
     password: z.string({
@@ -13,8 +15,13 @@ const editPasswordSchema = toTypedSchema(z.object({
     }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_\-\/])([A-Za-z\d@$!%*?&.#_\-\/]|[^ ]){8,15}$/, 'formato de contraseña invalido')
 }))
 
+let props = defineProps<{
+    userId: number | undefined | null
+}>()
+
 const handleEditPassword = (values: any) => {
-    console.log(values)
+
+    changePassword({ userId: props.userId, ...values });
 }
 
 </script>

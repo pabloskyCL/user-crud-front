@@ -63,6 +63,29 @@ export function useUser(){
       })
     }
 
+    const changePassword = async (data: {
+      userId: number,
+      password: string
+    }) => {
+      return await axios.put('http://localhost/api/changePassword', data,{
+        headers: {
+          Authorization: 'Bearer '+ authStore.token,
+          Accept: 'application/json'
+        }
+      }).then(({data}) => {
+        toast({
+          title: data.message,
+          variant:'default',
+          class: 'bg-teal-600 text-white'
+        })
+      }).catch(({response}) => {
+        toast({
+          title: response.data.message,
+          variant: 'destructive'
+        })
+      })
+    }
+
     const deleteUser = async (id: number) => {
       return await axios.delete('http://localhost/api/user',{data: {"id": id},
         headers: {
@@ -87,6 +110,7 @@ export function useUser(){
       usersList,
       saveUser,
       updateUser,
-      deleteUser
+      deleteUser,
+      changePassword
     }
 }
