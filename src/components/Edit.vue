@@ -3,17 +3,17 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/Store/Auth';
 import type { role } from '@/Store/Auth';
-import { useRoute } from 'vue-router';
-import ChangePasswordForm from '../forms/ChangePasswordForm.vue';
-import { Button } from '../ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { Input } from '../ui/input';
+import { useRoute, useRouter } from 'vue-router';
+import ChangePasswordForm from '@/components/forms/ChangePasswordForm.vue';
+import { Button } from './ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { Input } from './ui/input';
 import * as z from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useUser } from '@/composables/useUser';
-import { Toaster } from '../ui/toast';
+import { Toaster, useToast } from './ui/toast';
 
 const { updateUser } = useUser();
 
@@ -22,17 +22,19 @@ let user = reactive<{
     id: number | undefined | null,
     name: string,
     email: string,
-    role: []
+    roles: []
 }>({
     id: undefined,
     name: '',
     email: '',
-    role: []
+    roles: []
 });
 const roles = ref<role[]>();
 const authStore = useAuthStore();
 const loading = ref(true);
 const route = useRoute();
+const router = useRouter();
+const { toast } = useToast();
 
 onMounted(async () => {
     await axios.get('http://localhost/api/user/' + route.params.id, {
@@ -42,7 +44,14 @@ onMounted(async () => {
         }
     }).then(({ data }) => {
         user = data.data
-        console.log(user.id)
+    }).catch(({ response }) => {
+        router.push('/').then(() => {
+            toast({
+                title: response.data.message,
+                variant: 'destructive'
+            })
+        });
+
     })
 
     await axios.get('http://localhost/api/role').then(({ data }) => {
@@ -108,7 +117,7 @@ const handleEditUser = async (values: any) => {
                 <CardTitle>Información general</CardTitle>
             </CardHeader>
             <CardContent>
-                <Toaster />
+
                 <Form id="edit-user-form" :validation-schema="editUserFormSchema" :validate-on-mount="false"
                     @submit="handleEditUser">
                     <div class="grid grid-cols-2 gap-4">
@@ -170,5 +179,6 @@ const handleEditUser = async (values: any) => {
             </CardFooter>
         </Card>
         <ChangePasswordForm :userId="user.id" />
+        <Toaster />
     </div>
 </template>
