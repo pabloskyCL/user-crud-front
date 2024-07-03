@@ -4,7 +4,7 @@ import UserLayout from '@/components/layouts/UserLayout.vue';
 import { useAuthStore } from '@/Store/Auth';
 import { useToast } from '@/components/ui/toast';
 
-const routes = [
+export const routes = [
   {
     path: '/',
     meta: { layout: AdminLayout },
