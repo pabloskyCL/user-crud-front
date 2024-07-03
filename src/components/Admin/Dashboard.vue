@@ -20,7 +20,6 @@ onMounted(async () => {
     });
 
     users.value = res?.data.data
-
 })
 
 const handleDelete = async (id: number) => {
@@ -31,6 +30,11 @@ const handleDelete = async (id: number) => {
     }).finally(() => {
         loading.value = false;
     })
+}
+
+const createAt = (date: string) => {
+    const newDate = new Date(Date.parse(date));
+    return newDate.toLocaleDateString('es-CL', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
 }
 
 </script>
@@ -66,7 +70,7 @@ const handleDelete = async (id: number) => {
                                 {{ user.name }}
                             </TableCell>
                             <TableCell>
-                                <Badge v-for="role in user.role" variant="outline">
+                                <Badge v-for="role in user.roles" variant="outline">
                                     {{ role }}
                                 </Badge>
                             </TableCell>
@@ -74,7 +78,7 @@ const handleDelete = async (id: number) => {
                                 {{ user.email }}
                             </TableCell>
                             <TableCell class="hidden md:table-cell">
-                                2023-07-12 10:42 AM
+                                {{ createAt(user.created_at) + ' hrs' }}
                             </TableCell>
                             <TableCell>
                                 <DropdownMenu>
@@ -86,8 +90,16 @@ const handleDelete = async (id: number) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                                        <DropdownMenuItem>Ver</DropdownMenuItem>
-                                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                                        <RouterLink :to="`/show/${user.id}`">
+                                            <DropdownMenuItem>
+                                                Ver
+                                            </DropdownMenuItem>
+                                        </RouterLink>
+                                        <RouterLink :to="`/edit/${user.id}`">
+                                            <DropdownMenuItem>
+                                                Editar
+                                            </DropdownMenuItem>
+                                        </RouterLink>
                                         <DropdownMenuItem @click="handleDelete(user.id)">Eliminar</DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -97,12 +109,6 @@ const handleDelete = async (id: number) => {
                 </Table>
                 <LoaderCircle class="animate-spin items-center justify-center h-20 w-20" v-else />
             </CardContent>
-            <CardFooter>
-                <div class="text-xs text-muted-foreground">
-                    Total <strong>1-10</strong> de <strong>32</strong>
-                    usuarios
-                </div>
-            </CardFooter>
         </Card>
         <Toaster />
     </main>
