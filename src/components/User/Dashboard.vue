@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CircleUser } from 'lucide-vue-next'
 import Avatar from '@/components/ui/avatar/Avatar.vue'
 import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue'
+import { Toaster } from '../ui/toast'
 
 
 defineProps<{
     user: {
+        id: number | null | undefined,
         name: string,
         email: string,
         roles: string[]
@@ -43,18 +44,21 @@ defineProps<{
                         <p className="text-muted-foreground">{{ user?.email }}</p>
                         <div>
                             Roles:<Badge v-for="rol in user?.roles">
-                                {{ rol?? 'User'}}
+                                {{ rol ?? 'User' }}
                             </Badge>
                         </div>
                         <p className="text-sm max-w-[400px] text-muted-foreground">
-                            Usuario creado en: 
+                            Usuario creado en:
                         </p>
                     </div>
                     <div className="mt-6 w-full flex justify-center">
-                        <Button><RouterLink to="#">Editar</RouterLink></Button>
+                        <Button>
+                            <RouterLink :to="`/edit/${user?.id}`">Editar</RouterLink>
+                        </Button>
                     </div>
                 </Card>
             </CardContent>
         </Card>
+        <Toaster />
     </main>
 </template>
