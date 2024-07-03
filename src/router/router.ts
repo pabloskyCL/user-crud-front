@@ -2,6 +2,7 @@ import { Router, createRouter, createWebHistory } from 'vue-router'
 import AdminLayout from '@/components/layouts/AdminLayout.vue';
 import UserLayout from '@/components/layouts/UserLayout.vue';
 import { useAuthStore } from '@/Store/Auth';
+import { useToast } from '@/components/ui/toast';
 
 const routes = [
   {
@@ -16,6 +17,7 @@ const routes = [
   },
   {
     path: '/register',
+    name: 'register' ,
     component: () => import('@/components/Register.vue')
   },
   {
@@ -25,10 +27,13 @@ const routes = [
   },
   {
     path: '/edit/:id',
-    name: 'edit',
-    params: true,
     meta: { layout: AdminLayout },
-    component: () => import('@/components/Admin/Edit.vue')
+    component: () => import('@/components/Edit.vue')
+  },
+  {
+    path: '/show/:id',
+    meta: { layout: AdminLayout },
+    component: () => import('@/components/Admin/Show.vue')
   }
 ]
 
@@ -38,17 +43,31 @@ const router: Router = createRouter({
   routes
 })
 
+let privateRoutes = [
+  '/create',
+  '/show'
+]
+
 
 router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
-  if(!authStore.user && to.name !== 'login'){
+  const { toast } = useToast();
+  if(!authStore.user && to.name !== 'login' && to.name !== 'register'){
     return {  path: '/login'}
   }
 
-  if(authStore.user && to.meta.layout && !authStore.user.roles.find((role) => role == 'Admin')){
+  const isAdmin = authStore.user?.roles.find((role) => role == 'Admin');
+
+  if(authStore.user && to.meta.layout && !isAdmin){
      to.meta.layout = UserLayout
   }
-
+  if(!isAdmin && privateRoutes.includes(to.path)){
+    toast({
+      title: 'no eres administrador',
+      description: 'solo los usuarios con permiso administrador pueden entrar aquí'
+    })
+    return { path: '/' }
+  }
 
 })
 

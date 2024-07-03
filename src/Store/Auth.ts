@@ -60,10 +60,13 @@ export const useAuthStore = defineStore({
             await this.getToken();
             await axios.post('http://localhost/api/register', form).then(
                 (res) => {
-                  toast({
-                    title: 'Usuario creado con exito'
-                  })
-                    this.$router.push('/login');
+                    this.$router.push('/login').then(() => {
+                      toast({
+                        title: 'Usuario creado con exito',
+                        description: 'ya puedes iniciar sesion',
+                        class: 'bg-teal-600 text-white'
+                      })
+                    });
                 }
             )
         },
