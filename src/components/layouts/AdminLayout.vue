@@ -40,7 +40,7 @@ const handleLogout = async () => {
                             <UserPlus class="h-6 w-6" />
                             Crear Usuario
                         </RouterLink>
-                        <RouterLink :to="`edit/${authStore.user?.id}`"
+                        <RouterLink :to="`/edit/${authStore.user?.id}`"
                             class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary">
                             <CircleUser class="h-6 w-6" />
                             Editar mi usuario
