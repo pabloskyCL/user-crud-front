@@ -22,7 +22,7 @@ let user = reactive<{
     id: number | undefined | null,
     name: string,
     email: string,
-    roles: []
+    roles: string[]
 }>({
     id: undefined,
     name: '',
@@ -94,7 +94,7 @@ const handleEditUser = async (values: any) => {
     await updateUser({
         name: values.firstName + ' ' + values.lastName,
         email: values.email,
-        role: values.role
+        role: authStore.user?.roles.includes('Admin') ? values.role : 'User'
     })
 }
 
@@ -154,7 +154,7 @@ const handleEditUser = async (values: any) => {
                             <FormMessage />
                         </FormItem>
                     </FormField>
-                    <FormField v-slot="{ componentField }" name="role">
+                    <FormField v-if="user.roles.includes('Admin')" v-slot="{ componentField }" name="role">
                         <FormItem>
                             <FormLabel>Role</FormLabel>
                             <Select v-bind="componentField">
