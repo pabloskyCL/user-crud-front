@@ -46,7 +46,6 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-    console.log(values);
     saveUser({
         name: values.firstName + ' ' + values.lastName,
         email: values.email,

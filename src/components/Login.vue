@@ -19,7 +19,7 @@ import LoginForm from './forms/LoginForm.vue';
         <LoginForm></LoginForm>
         <div class="mt-4 text-center text-sm">
           aun no tienes cuenta?.
-          <RouterLink to="register" class="underline">
+          <RouterLink to="/register" class="underline">
             Registrate
           </RouterLink>
         </div>

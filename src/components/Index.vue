@@ -5,7 +5,6 @@ import UserDashboard from './User/Dashboard.vue';
 import { computed } from 'vue';
 
 const authStore = useAuthStore();
-console.log(authStore.user);
 const isAdmin = computed(() => {
   if (authStore.user?.roles.find((role) => role == "Admin")) {
     return true;
