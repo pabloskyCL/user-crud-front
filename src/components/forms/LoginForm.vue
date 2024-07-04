@@ -24,8 +24,8 @@ const form = useForm({
     validationSchema: formSchema
 })
 
-const onSubmit = form.handleSubmit((values) => {
-    authStore.login({
+const onSubmit = form.handleSubmit(async (values) => {
+    await authStore.login({
         email: values.email,
         password: values.password
     }).catch((error) => {

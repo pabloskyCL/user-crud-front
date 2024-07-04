@@ -3,7 +3,7 @@ import { useAuthStore } from '@/Store/Auth';
 import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
 import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import { Button } from '@/components/ui/button';
-import { CircleUser, Package2, Search } from 'lucide-vue-next';
+import { CircleUser, Package2 } from 'lucide-vue-next';
 import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
 import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
 import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';

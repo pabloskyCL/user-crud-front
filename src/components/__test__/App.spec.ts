@@ -5,7 +5,7 @@
 import { mount } from '@vue/test-utils'
 import { routes } from '@/router/router'
 import App from '@/App.vue'
-import { describe, it, expect, test ,vi } from 'vitest'
+import { describe, expect, test ,vi } from 'vitest'
 import { Router, createRouter, createWebHistory } from 'vue-router'
 import { createTestingPinia } from '@pinia/testing'
 import { useToast } from '../ui/toast'
@@ -23,7 +23,7 @@ let privateRoutes = [
 ]
 
 
-testRouter.beforeEach(async (to, from) => {
+testRouter.beforeEach(async (to) => {
   const authStore = useAuthStore();
   const { toast } = useToast();
   if(!authStore.user && to.name !== 'login' && to.name !== 'register'){
@@ -69,13 +69,6 @@ describe('Run spa for the first time', () => {
     expect(wrapper.html()).toContain('Iniciar Sesión')
     expect(wrapper.find('a[href="/register"]').attributes('href')).toBe('/register')
     expect(wrapper.find('input').attributes('name') == "email").toBe(true)
-
-    // const push = vi.spyOn(router, 'push')
-
-    // await mountApp().find('a[href="/register"]').trigger('click')
-
-    // expect(push).toHaveBeenCalledOnce()
-    // expect(push).toHaveBeenCalledWith('/register')
 
   })
 

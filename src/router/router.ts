@@ -49,7 +49,7 @@ let privateRoutes = [
 ]
 
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore();
   const { toast } = useToast();
   if(!authStore.user && to.name !== 'login' && to.name !== 'register'){
