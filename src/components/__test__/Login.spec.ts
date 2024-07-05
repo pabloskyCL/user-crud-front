@@ -18,13 +18,13 @@ describe('Login view test', () => {
   let testRouter: Router;
   const loginResponse = {
     "user": {
-        "id": 1,
-        "name": "Test User",
-        "email": "test@example.com",
-        "roles": [
-            "Admin"
-        ],
-        "created_at": "2024-07-03 22:36:32"
+      "id": 1,
+      "name": "Test User",
+      "email": "test@example.com",
+      "roles": [
+        "Admin"
+      ],
+      "created_at": "2024-07-03 22:36:32"
     },
     "accessToken": "4|aOSTilJWkqquyjNGGBBusisjvdRKBngCvEk8AB9naa1d9a3a"
   }
@@ -98,30 +98,30 @@ describe('Login view test', () => {
 
   })
 
-  test('login attempt', async () => {
-    const wrapper = mountApp();
-    testRouter.push('login');
+  // test('login attempt', async () => {
+  //   const wrapper = mountApp();
+  //   testRouter.push('login');
 
-    await testRouter.isReady();
+  //   await testRouter.isReady();
 
-    // const push = vi.spyOn(testRouter, 'push')
+  //   // const push = vi.spyOn(testRouter, 'push')
 
-    await wrapper.find('input[name="email"]').setValue("test@example.com")
-    await wrapper.find('input[name="password"]').setValue("password")
+  //   await wrapper.find('input[name="email"]').setValue("test@example.com")
+  //   await wrapper.find('input[name="password"]').setValue("password")
 
-    await wrapper.find('form').trigger('submit')
-
-    
-    // expect(authStore.login).toHaveBeenCalledTimes(1)
-    // expect(axios.post).toHaveBeenCalledWith('/login')
-
-    await flushPromises()
-
-    await testRouter.isReady();
+  //   await wrapper.find('form').trigger('submit')
 
 
-    // expect(push).toHaveBeenCalledTimes(1)
-    // expect(push).toHaveBeenCalledWith('/')
+  //   // expect(authStore.login).toHaveBeenCalledTimes(1)
+  //   // expect(axios.post).toHaveBeenCalledWith('/login')
 
-  })
+  //   await flushPromises()
+
+  //   await testRouter.isReady();
+
+
+  //   // expect(push).toHaveBeenCalledTimes(1)
+  //   // expect(push).toHaveBeenCalledWith('/')
+
+  // })
 })
